@@ -5,79 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detector de Anemia - Perfil</title>
     <link rel="stylesheet" href="../assets/css/style_main.css"> <!-- Referencia al archivo CSS -->
-    <style>
-        /* Estilo para el formulario moderno */
-        #crear-paciente-form, #actualizar-paciente-form {
-            background-color: #fff; /* Fondo blanco para el formulario */
-            border-radius: 8px; /* Bordes redondeados */
-            padding: 20px; /* Espaciado interno */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-            margin-top: 20px; /* Espaciado superior */
-        }
-
-        #crear-paciente-form label, 
-        #actualizar-paciente-form label {
-            display: block; /* Hacer que las etiquetas ocupen todo el ancho */
-            margin-bottom: 5px; /* Espaciado inferior */
-            font-weight: bold; /* Negrita para las etiquetas */
-        }
-
-        #crear-paciente-form input, 
-        #crear-paciente-form select,
-        #actualizar-paciente-form input,
-        #actualizar-paciente-form select {
-            width: 100%; /* Ancho completo */
-            padding: 10px; /* Espaciado interno */
-            margin-bottom: 15px; /* Espaciado inferior */
-            border: 1px solid #ccc; /* Borde gris claro */
-            border-radius: 4px; /* Bordes redondeados */
-            box-sizing: border-box; /* Incluye padding en el ancho total */
-        }
-
-        #crear-paciente-form button,
-        #actualizar-paciente-form button {
-            background-color: #4CAF50; /* Color de fondo verde */
-            color: white; /* Texto blanco */
-            border: none; /* Sin borde */
-            padding: 10px; /* Espaciado interno */
-            border-radius: 4px; /* Bordes redondeados */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s; /* Transición suave */
-        }
-
-        #crear-paciente-form button:hover,
-        #actualizar-paciente-form button:hover {
-            background-color: #45a049; /* Color al pasar el cursor */
-        }
-
-        /* Estilo para la lista de pacientes */
-        .patient-list {
-            margin-top: 20px;
-            display: none; /* Inicialmente oculto */
-        }
-
-        /* Estilo para el botón de eliminar */
-        .btn-eliminar {
-            background-color: red; /* Color de fondo rojo */
-            color: white; /* Texto blanco */
-            border: none; /* Sin borde */
-            padding: 10px; /* Espaciado interno */
-            border-radius: 4px; /* Bordes redondeados */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s; /* Transición suave */
-            margin-top: 10px; /* Espaciado superior */
-        }
-
-        .btn-eliminar:hover {
-            background-color: darkred; /* Color al pasar el cursor */
-        }
-    </style>
+    <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
 </head>
+
+<style>
+
+        nav>a:nth-child(2){
+            background-color: #659bbe;
+        }
+        * {
+            margin: 0;  /* Elimina los márgenes por defecto */
+            padding: 0; /* Elimina el padding por defecto */
+            box-sizing: border-box; /* Incluye el padding y el borde en el tamaño total */
+        }
+
+        /* Estilos para el header */
+        header {
+            background-color: #007BFF; /* Color de fondo del header */
+            color: #ffffff; /* Color del texto en el header */
+            padding: 20px 0; /* Padding vertical del header */
+            text-align: center; /* Centra el texto */
+        }
+
+        h1 {
+            margin: 0; /* Asegúrate de que no haya margen en el h1 */
+            font-size: 2.5em; /* Tamaño de fuente del h1 */
+        }
+
+        /* Estilos para la barra de navegación */
+        nav {
+            display: flex; /* Utiliza flexbox para la barra de navegación */
+            justify-content: center; /* Centra los enlaces horizontalmente */
+            background-color: #5a748f; /* Color de fondo de la barra de navegación */
+            padding: 15px 0; /* Padding vertical de la barra de navegación */
+        }
+
+        nav a {
+            color: #ffffff; /* Color del texto de los enlaces */
+            text-decoration: none; /* Elimina el subrayado de los enlaces */
+            padding: 10px 20px; /* Padding de los enlaces */
+            transition: background-color 0.3s; /* Transición suave al cambiar de color */
+        }
+    /* Estilo para el formulario moderno */
+    #crear-paciente-form, #actualizar-paciente-form {
+        background-color: #fff; /* Fondo blanco para el formulario */
+        border-radius: 8px; /* Bordes redondeados */
+        padding: 20px; /* Espaciado interno */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        margin-top: 20px; /* Espaciado superior */
+    }
+
+    #crear-paciente-form label, 
+    #actualizar-paciente-form label {
+        display: block; /* Hacer que las etiquetas ocupen todo el ancho */
+        margin-bottom: 5px; /* Espaciado inferior */
+        font-weight: bold; /* Negrita para las etiquetas */
+    }
+
+    #crear-paciente-form input, 
+    #crear-paciente-form select,
+    #actualizar-paciente-form input,
+    #actualizar-paciente-form select {
+        width: 100%; /* Ancho completo */
+        padding: 10px; /* Espaciado interno */
+        margin-bottom: 15px; /* Espaciado inferior */
+        border: 1px solid #ccc; /* Borde gris claro */
+        border-radius: 4px; /* Bordes redondeados */
+        box-sizing: border-box; /* Incluye padding en el ancho total */
+    }
+
+    #crear-paciente-form button,
+    #actualizar-paciente-form button {
+        background-color: #4CAF50; /* Color de fondo verde */
+        color: white; /* Texto blanco */
+        border: none; /* Sin borde */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 4px; /* Bordes redondeados */
+        cursor: pointer; /* Cursor de puntero */
+        transition: background-color 0.3s; /* Transición suave */
+    }
+
+    #crear-paciente-form button:hover,
+    #actualizar-paciente-form button:hover {
+        background-color: #45a049; /* Color al pasar el cursor */
+    }
+
+    /* Estilo para la lista de pacientes */
+    .patient-list {
+        margin-top: 20px;
+        display: none; /* Inicialmente oculto */
+    }
+
+    /* Estilo para el botón de eliminar */
+    .btn-eliminar {
+        background-color: red; /* Color de fondo rojo */
+        color: white; /* Texto blanco */
+        border: none; /* Sin borde */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 4px; /* Bordes redondeados */
+        cursor: pointer; /* Cursor de puntero */
+        transition: background-color 0.3s; /* Transición suave */
+        margin-top: 10px; /* Espaciado superior */
+    }
+
+    .btn-eliminar:hover {
+        background-color: darkred; /* Color al pasar el cursor */
+    }
+
+            /* Estilos para el footer */
+            footer {
+            text-align: center; /* Centra el texto del footer */
+            padding: 15px 0; /* Padding vertical del footer */
+            background-color: #5a748f; /* Color de fondo del footer */
+            color: #ffffff; /* Color del texto en el footer */
+            position: relative; /* Posición relativa para el footer */
+            bottom: 0; /* Alinea al fondo */
+            width: 100%; /* Ancho completo */
+        }
+</style>
+
+
+
+
 <body>
 
     <!-- Header -->
     <header>
-        <h1>Detector de Anemia</h1>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
     </header>
 
     <!-- Navbar -->
@@ -92,10 +146,10 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <h3>Gestión de Pacientes</h3>
-        <a href="#" onclick="mostrarFormulario('ver')">Ver Pacientes</a>
-        <a href="#" onclick="mostrarFormulario('crear')">Crear Paciente</a>
-        <a href="#" onclick="mostrarFormulario('actualizar')">Actualizar Paciente</a>
-        <a href="#" onclick="mostrarFormulario('eliminar')">Eliminar Paciente</a> <!-- Cambiado aquí -->
+        <a href="#" onclick="mostrarFormulario('ver')"><i class="fa-regular fa-eye"></i> Ver Pacientes</a>
+        <a href="#" onclick="mostrarFormulario('crear')"><i class="fa-solid fa-plus"></i> Crear Paciente</a>
+        <a href="#" onclick="mostrarFormulario('actualizar')"><i class="fa-solid fa-pen-nib"></i> Actualizar Paciente</a>
+        <a href="#" onclick="mostrarFormulario('eliminar')"><i class="fa-solid fa-trash"></i>  Eliminar Paciente</a> <!-- Cambiado aquí -->
     </div>
 
     <!-- Main Content -->
@@ -188,28 +242,49 @@
     </footer>
 
     <script>
-        // Cargar la lista de pacientes al inicio
-        window.onload = function() {
-            cargarPacientes(); // Cargar pacientes en el selector
-            fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
-                .then(response => response.json())
-                .then(data => {
-                    const pacienteLista = document.getElementById('paciente-lista');
-                    pacienteLista.innerHTML = ''; // Limpiar la lista existente
+    // Cargar la lista de pacientes al inicio
+    window.onload = function() {
+        cargarPacientes(); // Cargar pacientes en el selector
+        fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
+            .then(response => response.json())
+            .then(data => {
+                const pacienteLista = document.getElementById('paciente-lista');
+                pacienteLista.innerHTML = ''; // Limpiar la lista existente
 
-                    if (data.length === 0) {
-                        pacienteLista.innerHTML = '<div class="patient-item">No hay pacientes registrados.</div>';
-                    } else {
-                        data.forEach(paciente => {
-                            const item = document.createElement('div');
-                            item.className = 'patient-item';
-                            item.textContent = `Paciente: ${paciente.nombre}, Sexo: ${paciente.sexo}`;
-                            pacienteLista.appendChild(item);
-                        });
-                    }
-                })
-                .catch(error => console.error('Error al cargar los pacientes:', error));
-        };
+                if (data.length === 0) {
+                    pacienteLista.innerHTML = '<div class="patient-item">No hay pacientes registrados.</div>';
+                } else {
+                    data.forEach(paciente => {
+                        const resultadoAnemia = paciente.resultado_anemia !== null ? paciente.resultado_anemia : "Falta hacer predicción";
+                        let estadoAnemia;
+
+                        switch (resultadoAnemia) {
+                            case '4':
+                                estadoAnemia = "Sin Anemia";
+                                break;
+                            case '3':
+                                estadoAnemia = "Anemia Leve";
+                                break;
+                            case '2':
+                                estadoAnemia = "Anemia Normal";
+                                break;
+                            case '1':
+                                estadoAnemia = "Anemia Grave";
+                                break;
+                            default:
+                                estadoAnemia = "Falta hacer predicción";
+                        }
+
+                        const item = document.createElement('div');
+                        item.className = 'patient-item';
+                        item.textContent = `Paciente: ${paciente.nombre}, Sexo: ${paciente.sexo}, Estado de Anemia: ${estadoAnemia}`;
+                        pacienteLista.appendChild(item);
+                    });
+                }
+            })
+            .catch(error => console.error('Error al cargar los pacientes:', error));
+    };
+
 
         // Cargar pacientes en el formulario de actualización
         function cargarPacientes() {

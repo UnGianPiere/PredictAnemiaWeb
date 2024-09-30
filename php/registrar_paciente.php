@@ -42,9 +42,57 @@ if (isset($_SESSION['user_id'])) {
                         VALUES ('$paciente_id', '$peso', '$talla', '$hemoglobina', '$edad', CURDATE())";
 
         if ($conn->query($sql_medical) === TRUE) {
-            // Redirigir a perfil.html con un mensaje de éxito
-            header("Location: ../views/perfil.html?mensaje=Paciente creado con éxito.");
-            exit();
+            // Obtener el ID de los datos médicos insertados
+            $medical_data_id = $conn->insert_id;
+
+            // Crear el array con los datos para la predicción
+            $data = array(
+                "edad" => $edad,
+                "hemoglobina" => $hemoglobina,
+                "peso" => $peso,
+                "talla" => $talla
+            );
+
+            // Generar el JSON correctamente
+            $jsonData = json_encode($data);
+
+            // Comando para ejecutar el script de Python
+            $command = 'python "C:\xampp\htdocs\ANEMIA_WEB\ML\predict_anemia.py" "' . addslashes($jsonData) . '"';
+            $output = shell_exec($command);
+            $return_var = 0; // Variable para el código de retorno
+
+            // Verificar si el script Python se ejecutó correctamente
+            if ($return_var === 0) {
+                // Decodificar el JSON de la predicción
+                $prediccion = json_decode($output, true);
+
+                // Verificar si se recibió un array y si contiene el campo esperado
+                if (is_array($prediccion) && isset($prediccion['resultado_anemia'])) {
+                    $resultado_anemia = $prediccion['resultado_anemia'];
+
+                    // Guardar el resultado en la tabla predictions con medical_data_id
+                    $sql_prediction = "INSERT INTO predictions (medical_data_id, resultado_anemia, fecha_prediccion) 
+                                    VALUES ('$medical_data_id', '$resultado_anemia', CURDATE())";
+
+                    if ($conn->query($sql_prediction) === TRUE) {
+                        // Redirigir a perfil.html con el mensaje de éxito
+                        header("Location: ../views/perfil.html?mensaje=Paciente registrado con éxito&resultado_anemia=$resultado_anemia");
+                        exit();
+                    } else {
+                        // Manejar el error al insertar la predicción
+                        echo "<p>Error al guardar predicción.</p>";
+                        exit();
+                    }
+                } else {
+                    // Manejar el error de formato en la predicción
+                    echo "<p>Error: No se recibió una predicción válida. Datos obtenidos: $output</p>";
+                    exit();
+                }
+            } else {
+                // Manejar el error al ejecutar el script Python
+                echo "<h2>Error al ejecutar el modelo de predicción. Código de retorno: $return_var</h2>";
+                echo "<pre>" . htmlspecialchars($output) . "</pre>";
+            }
         } else {
             // Manejar el error al insertar datos médicos
             header("Location: ../views/perfil.html?error=Error al insertar datos médicos.");

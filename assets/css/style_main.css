@@ -1,27 +1,14 @@
-/* Estilos generales para el cuerpo */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Color de fondo claro */
+header {
+    background-color: #007BFF; /* Color de fondo del header */
+    color: #ffffff; /* Color del texto en el header */
+    padding: 20px 0; /* Padding vertical del header */
+    text-align: center; /* Centra el texto */
+    margin: 0; /* Elimina el margen del header */
 }
 
-
-/* Estilo para la Navbar */
-nav {
-    display: flex;
-    background-color: #333;
-    justify-content: center;
-    position: sticky; /* Mantiene el navbar fijo en la parte superior */
-    top: 0; /* Fijo en la parte superior */
-    z-index: 1000; /* Asegura que el navbar esté por encima del contenido */
-}
-
-nav a {
-    padding: 14px 20px;
-    display: block;
-    color: white;
-    text-align: center;
-    text-decoration: none;
+h1 {
+    margin: 0; /* Asegúrate de que no haya margen en el h1 */
+    font-size: 2em; /* Tamaño de fuente del h1 */
 }
 
 nav a:hover {

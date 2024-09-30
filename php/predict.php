@@ -1,46 +1,34 @@
 <?php
-// Habilitar la visualización de errores en PHP
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario y convertirlos a números
+    $edad = (int)$_POST['edad'];
+    $peso = (float)$_POST['peso'];
+    $talla = (float)$_POST['talla'];
+    $hemoglobina = (float)$_POST['hemoglobina'];
 
-// Recibir los datos del formulario
-$edad = $_POST['edad'];
-$peso = $_POST['peso'];
-$talla = $_POST['talla'];
-$hemoglobina = $_POST['hemoglobina'];
+    // Crear un array con los datos
+    $data = array(
+        "edad" => $edad,
+        "peso" => $peso,
+        "talla" => $talla,
+        "hemoglobina" => $hemoglobina
+    );
 
-// Crear un array con los datos
-$data = array(
-    "edad" => (int)$edad,  // Convertir a entero
-    "peso" => (int)$peso,
-    "talla" => (int)$talla,
-    "hemoglobina" => (int)$hemoglobina
-);
+    // Generar el JSON correctamente
+    $jsonData = json_encode($data);
 
-// Convertir los datos a JSON
-$data_json = json_encode($data);
+    // Escapar las comillas para el comando
+    $command = 'python "C:\xampp\htdocs\ANEMIA_WEB\ML\predict_anemia.py" "' . addslashes($jsonData) . '"';
 
-// Mostrar los datos para verificar que se estén recibiendo correctamente
-echo "<pre>";
-print_r($data);
-echo "</pre>";
+    // Ejecutar el comando
+    $output = shell_exec($command);
 
-// Mostrar el JSON para verificar el formato
-echo "<pre>JSON generado: $data_json</pre>";
-
-// Ejecutar el script Python y pasarle los datos correctamente
-$command = 'python ' . escapeshellarg(realpath('../ML/predict_anemia.py')) . ' ' . escapeshellarg($data_json);
-
-// Mostrar el comando para verificar
-echo "<pre>Comando ejecutado: $command</pre>";
-
-// Ejecutar el comando y capturar errores
-$output = shell_exec($command . ' 2>&1');
-
-// Mostrar el resultado de la ejecución, incluyendo errores si los hubiera
-echo "<pre>Salida de shell: $output</pre>";
-
-// Mostrar el resultado de la predicción
-echo "El nivel de anemia es: " . $output;
+    // Mostrar la salida
+    echo "<h2>Comando ejecutado:</h2>";
+    echo "<p>" . htmlspecialchars($command) . "</p>";
+    echo "<h2>Salida de shell:</h2>";
+    echo "<p>" . htmlspecialchars($output) . "</p>";
+} else {
+    echo "<p>No se recibió ningún dato.</p>";
+}
 ?>

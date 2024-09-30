@@ -1,13 +1,5 @@
 <?php
 session_start(); // Iniciar sesión
-
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode([]); // Si no está autenticado, devolver un array vacío
-    exit();
-}
-
-// Conexión a la base de datos
 $servername = "localhost";
 $username = "root"; // Usuario de MySQL
 $password = "";     // Contraseña de MySQL
@@ -21,20 +13,33 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Obtener el ID del usuario autenticado
-$user_id = $_SESSION['user_id'];
+// Comprobar si la sesión del usuario está activa
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id']; // Obtener el ID del usuario de la sesión
 
-// Consultar los pacientes del usuario autenticado
-$sql = "SELECT * FROM patients WHERE user_id = '$user_id'";
-$result = $conn->query($sql);
+    // Consulta para obtener los pacientes y sus resultados de anemia
+    $sql = "SELECT p.nombre, p.sexo, pred.resultado_anemia 
+            FROM patients p
+            LEFT JOIN medical_data md ON p.id = md.patient_id
+            LEFT JOIN predictions pred ON md.id = pred.medical_data_id
+            WHERE p.user_id = '$user_id'"; // Filtrar por el ID del usuario
 
-$pacientes = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $pacientes[] = $row; // Agregar cada paciente al array
+    $result = $conn->query($sql);
+
+    $pacientes = array();
+
+    if ($result->num_rows > 0) {
+        // Recuperar los datos de los pacientes
+        while ($row = $result->fetch_assoc()) {
+            $pacientes[] = $row; // Agregar cada paciente al array
+        }
     }
+
+    // Devolver los datos en formato JSON
+    echo json_encode($pacientes);
+} else {
+    echo json_encode(array("error" => "Usuario no autenticado.")); // Manejo de error si no hay sesión activa
 }
 
-echo json_encode($pacientes); // Devolver los pacientes como JSON
 $conn->close();
 ?>
