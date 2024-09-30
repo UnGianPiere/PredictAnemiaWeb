@@ -1,0 +1,106 @@
+/* Estilos generales para el cuerpo */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color de fondo claro */
+}
+
+
+/* Estilo para la Navbar */
+nav {
+    display: flex;
+    background-color: #333;
+    justify-content: center;
+    position: sticky; /* Mantiene el navbar fijo en la parte superior */
+    top: 0; /* Fijo en la parte superior */
+    z-index: 1000; /* Asegura que el navbar esté por encima del contenido */
+}
+
+nav a {
+    padding: 14px 20px;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #575757;
+}
+
+/* Estilo para el Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo para el Sidebar */
+.sidebar {
+    position: relative; /* Mantenerlo en el flujo del documento */
+    float: left; /* Asegura que el sidebar esté a la izquierda del contenido */
+    width: 200px; /* Ancho del sidebar */
+    height: calc(100vh - 100px); /* Altura total menos el header */
+    background-color: #444;
+    color: white;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Alinear el contenido principal */
+.main-content {
+    padding: 20px;
+    min-height: 80vh; /* Altura mínima del contenido principal */
+    margin-left: 220px; /* Dejar espacio para el sidebar */
+    margin-top: -5px; /* Ajustar para que esté alineado con el navbar */
+}
+
+/* Estilo para los encabezados del sidebar */
+.sidebar h3 {
+    margin-top: 0;
+}
+
+/* Estilo para los enlaces del sidebar */
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+/* Estilos para los botones de pacientes */
+.patients {
+    margin-top: 10px;
+}
+
+.patients button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.patients button:hover {
+    background-color: #45a049;
+}
+
+.patient-list {
+    margin-top: 20px;
+}
+
+.patient-item {
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+}

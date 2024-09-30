@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Para incluir padding y border en el tamaño total */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../img/fondo-login.png');
+    /* Cambia esto por la ruta de tu imagen */
+    background-size: cover;
+    /* Asegura que la imagen cubra todo el fondo */
+    background-position: center;
+    /* Centra la imagen */
+    background-repeat: no-repeat;
+    /* Evita que la imagen se repita */
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Aquí puedes eliminar el background-color si quieres que solo se vea la imagen de fondo */
+}
+
+.inicio-sesion {
+    width: 90%;
+    /* Cambiado a un porcentaje para mejor adaptabilidad */
+    max-width: 500px;
+    /* Ancho máximo */
+    background-color: #d3d3d3;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* Espaciado interno */
+}
+
+button {
+    background-color: #151515;
+    width: 100%;
+    /* Ancho completo */
+    height: 50px;
+    color: aliceblue;
+    border-radius: 10px;
+    margin: 10px 0;
+    /* Margen vertical */
+    border: none;
+    /* Quita el borde */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #333;
+    /* Efecto al pasar el cursor */
+}
+
+input {
+    background-color: #dedede;
+    width: 100%;
+    /* Ancho completo */
+    height: 50px;
+    margin: 10px 0;
+    /* Margen vertical */
+    border-radius: 10px;
+    padding-left: 15px;
+    /* Ajustado para un mejor espaciado */
+    border: none;
+    /* Quita el borde */
+    outline: none;
+    /* Quita el contorno al enfocarse */
+    color: #969697;
+}
+
+label{
+    font-weight: bold;
+}
+
+
+
+.login-form {
+    width: 100%;
+    /* Asegura que el formulario ocupe todo el ancho disponible */
+    padding: 20px;
+    /* Espaciado interno */
+}
+
+@media (max-width: 768px) {
+    .inicio-sesion {
+        width: 90%;
+        /* Más ancho en pantallas pequeñas */
+        padding: 15px;
+        /* Menos espaciado interno */
+    }
+
+    button {
+        height: 45px;
+  
+        /* Ajustar altura del botón */
+    }
+
+    input {
+        height: 45px;
+        /* Ajustar altura del input */
+    }
+}

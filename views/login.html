@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Verifica que esta ruta sea correcta -->
+    <title>Detector de Anemia - Inicio de Sesión</title>
+    <script>
+        // Mostrar el mensaje de error si existe
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            
+            if (error) {
+                const errorMessageDiv = document.createElement("div");
+                errorMessageDiv.textContent = error;
+                errorMessageDiv.style.color = "red"; // Estilo para mostrar el error
+                errorMessageDiv.style.padding = "10px";
+                document.querySelector('.login-form').prepend(errorMessageDiv);
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inicio-sesion">
+            <h1 class="titulo">INICIO DE SESIÓN</h1>
+
+            <div class="login-form">
+                <form action="../php/login.php" method="POST">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
+
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="***********" required>
+
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <div class="boton-register">
+                    <a href="registro.html"><button type="button">Registrarse</button></a>           
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
