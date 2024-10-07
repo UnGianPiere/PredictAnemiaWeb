@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id']; // Obtener el ID del usuario de la sesión
 
     // Consulta para obtener los pacientes y sus resultados de anemia
-    $sql = "SELECT p.nombre, p.sexo, pred.resultado_anemia 
+    $sql = "SELECT p.id, p.nombre, p.sexo, pred.resultado_anemia 
             FROM patients p
             LEFT JOIN medical_data md ON p.id = md.patient_id
             LEFT JOIN predictions pred ON md.id = pred.medical_data_id

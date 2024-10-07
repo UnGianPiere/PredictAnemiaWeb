@@ -1,39 +1,31 @@
 <?php
-// Incluir archivo de conexión a la base de datos
-include 'conexion.php'; // Asegúrate de que la ruta es correcta
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dbanemia";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener el ID del paciente a eliminar
-    $paciente_id = $_POST['paciente_id'];
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Verificar que se haya proporcionado un ID válido
-    if (!empty($paciente_id)) {
-        // Preparar la consulta para eliminar el paciente
-        $sql = "DELETE FROM pacientes WHERE id = ?";
-        
-        if ($stmt = $conn->prepare($sql)) {
-            // Vincular parámetros
-            $stmt->bind_param("i", $paciente_id);
-            
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                echo json_encode(["success" => true, "message" => "Paciente eliminado con éxito."]);
-            } else {
-                echo json_encode(["success" => false, "message" => "Error al eliminar el paciente."]);
-            }
-        } else {
-            echo json_encode(["success" => false, "message" => "Error en la preparación de la consulta."]);
-        }
-
-        // Cerrar la declaración
-        $stmt->close();
-    } else {
-        echo json_encode(["success" => false, "message" => "ID de paciente no válido."]);
-    }
-} else {
-    echo json_encode(["success" => false, "message" => "Método de solicitud no permitido."]);
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Cerrar la conexión
+// Obtener ID del paciente a eliminar
+$id = $_GET['id'];
+
+// Consulta para eliminar al paciente
+$sql = "DELETE FROM pacientes WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id);
+
+if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
+} else {
+    echo json_encode(["success" => false, "error" => $conn->error]);
+}
+
+$stmt->close();
 $conn->close();
 ?>

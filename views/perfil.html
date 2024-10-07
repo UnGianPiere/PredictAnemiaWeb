@@ -113,15 +113,7 @@
     }
 
             /* Estilos para el footer */
-            footer {
-            text-align: center; /* Centra el texto del footer */
-            padding: 15px 0; /* Padding vertical del footer */
-            background-color: #5a748f; /* Color de fondo del footer */
-            color: #ffffff; /* Color del texto en el footer */
-            position: relative; /* Posición relativa para el footer */
-            bottom: 0; /* Alinea al fondo */
-            width: 100%; /* Ancho completo */
-        }
+
 </style>
 
 
@@ -236,54 +228,60 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Detector de Anemia. Todos los derechos reservados.</p>
-    </footer>
 
     <script>
-    // Cargar la lista de pacientes al inicio
-    window.onload = function() {
-        cargarPacientes(); // Cargar pacientes en el selector
-        fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
-            .then(response => response.json())
-            .then(data => {
-                const pacienteLista = document.getElementById('paciente-lista');
-                pacienteLista.innerHTML = ''; // Limpiar la lista existente
 
-                if (data.length === 0) {
-                    pacienteLista.innerHTML = '<div class="patient-item">No hay pacientes registrados.</div>';
-                } else {
-                    data.forEach(paciente => {
-                        const resultadoAnemia = paciente.resultado_anemia !== null ? paciente.resultado_anemia : "Falta hacer predicción";
-                        let estadoAnemia;
+// Cargar la lista de pacientes al inicio
+window.onload = function() {
+    cargarPacientes(); // Cargar pacientes en el selector
+    fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
+        .then(response => response.json())
+        .then(data => {
+            const pacienteLista = document.getElementById('paciente-lista');
+            pacienteLista.innerHTML = ''; // Limpiar la lista existente
 
-                        switch (resultadoAnemia) {
-                            case '4':
-                                estadoAnemia = "Sin Anemia";
-                                break;
-                            case '3':
-                                estadoAnemia = "Anemia Leve";
-                                break;
-                            case '2':
-                                estadoAnemia = "Anemia Normal";
-                                break;
-                            case '1':
-                                estadoAnemia = "Anemia Grave";
-                                break;
-                            default:
-                                estadoAnemia = "Falta hacer predicción";
-                        }
+            if (data.length === 0) {
+                pacienteLista.innerHTML = '<div class="patient-item">No hay pacientes registrados.</div>';
+            } else {
+                data.forEach(paciente => {
+                    const resultadoAnemia = paciente.resultado_anemia !== null ? paciente.resultado_anemia : "Falta hacer predicción";
+                    let estadoAnemia;
+                    let color;
 
-                        const item = document.createElement('div');
-                        item.className = 'patient-item';
-                        item.textContent = `Paciente: ${paciente.nombre}, Sexo: ${paciente.sexo}, Estado de Anemia: ${estadoAnemia}`;
-                        pacienteLista.appendChild(item);
-                    });
-                }
-            })
-            .catch(error => console.error('Error al cargar los pacientes:', error));
-    };
+                    switch (resultadoAnemia) {
+                        case '4':
+                            estadoAnemia = "Sin Anemia";
+                            color = "green"; // Color verde para "Sin Anemia"
+                            break;
+                        case '3':
+                            estadoAnemia = "Anemia Leve";
+                            color = "pink"; // Color rosa para "Anemia Leve"
+                            break;
+                        case '2':
+                            estadoAnemia = "Anemia Normal";
+                            color = "orange"; // Color naranja para "Anemia Normal"
+                            break;
+                        case '1':
+                            estadoAnemia = "Anemia Grave";
+                            color = "red"; // Color rojo para "Anemia Grave"
+                            break;
+                        default:
+                            estadoAnemia = "Falta hacer predicción";
+                            color = "black"; // Color negro para "Falta hacer predicción"
+                    }
+
+                    const item = document.createElement('div');
+                    item.className = 'patient-item';
+                    item.textContent = `Paciente: ${paciente.nombre}, Sexo: ${paciente.sexo}, Estado de Anemia: ${estadoAnemia}`;
+                    item.style.backgroundColor = color; // Cambiar el color de fondo del elemento
+                    item.style.color = "white"; // Opcional: Cambiar el color del texto a blanco para mejor visibilidad
+                    pacienteLista.appendChild(item);
+                });
+            }
+        })
+        .catch(error => console.error('Error al cargar los pacientes:', error));
+};
+
 
 
         // Cargar pacientes en el formulario de actualización

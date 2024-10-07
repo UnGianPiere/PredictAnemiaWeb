@@ -25,10 +25,11 @@ if (isset($_SESSION['user_id'])) {
     $talla = $_POST['talla'];
     $hemoglobina = $_POST['hemoglobina'];
 
-    // Calcular edad a partir de la fecha de nacimiento
-    $fecha_actual = new DateTime();
-    $fecha_nac = new DateTime($fecha_nacimiento);
-    $edad = $fecha_actual->diff($fecha_nac)->y;
+// Calcular edad a partir de la fecha de nacimiento
+$fecha_actual = new DateTime();
+$fecha_nac = new DateTime($fecha_nacimiento);
+$edad = ($fecha_actual->diff($fecha_nac)->y * 12) + $fecha_actual->diff($fecha_nac)->m;
+
 
     // Inserción en la tabla patients
     $sql = "INSERT INTO patients (user_id, nombre, fecha_nacimiento, sexo, created_at, updated_at) 
