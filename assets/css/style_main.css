@@ -1,0 +1,98 @@
+header {
+    background-color: #007BFF; /* Color de fondo del header */
+    color: #ffffff; /* Color del texto en el header */
+    padding: 20px 0; /* Padding vertical del header */
+    text-align: center; /* Centra el texto */
+    margin: 0; /* Elimina el margen del header */
+}
+
+h1 {
+    margin: 0; /* Asegúrate de que no haya margen en el h1 */
+    font-size: 2em; /* Tamaño de fuente del h1 */
+}
+
+nav a:hover {
+    background-color: #575757;
+}
+
+/* Estilo para el Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo para el Sidebar */
+.sidebar {
+    position: relative; /* Mantenerlo en el flujo del documento */
+    float: left; /* Asegura que el sidebar esté a la izquierda del contenido */
+    width: 200px; /* Ancho del sidebar */
+    height: calc(100vh - 100px); /* Altura total menos el header */
+    background-color: #444;
+    color: white;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Alinear el contenido principal */
+.main-content {
+    padding: 20px;
+    min-height: 80vh; /* Altura mínima del contenido principal */
+    margin-left: 220px; /* Dejar espacio para el sidebar */
+    margin-top: -5px; /* Ajustar para que esté alineado con el navbar */
+}
+
+/* Estilo para los encabezados del sidebar */
+.sidebar h3 {
+    margin-top: 0;
+}
+
+/* Estilo para los enlaces del sidebar */
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+/* Estilos para los botones de pacientes */
+.patients {
+    margin-top: 10px;
+}
+
+.patients button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.patients button:hover {
+    background-color: #45a049;
+}
+
+.patient-list {
+    margin-top: 20px;
+}
+
+.patient-item {
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+
+h3{
+    color: white;
+}

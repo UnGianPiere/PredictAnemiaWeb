@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/style_main.css">
+    <title>Detector de Anemia - Inicio</title>
+    <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
+    <style>
+        .imagen_bienvenida{
+            background-color: #333;
+            width: 90%;
+            height: 50vh;
+            background-image: url(../assets/img/CONTRA_ANEMIA.png);
+            background-size: cover;
+            align-self: center;
+        }
+
+        nav>a:nth-child(1){
+            background-color: #659bbe;
+        }
+
+        * {
+            margin: 0;  /* Elimina los márgenes por defecto */
+            padding: 0; /* Elimina el padding por defecto */
+            box-sizing: border-box; /* Incluye el padding y el borde en el tamaño total */
+        }
+
+        /* Estilos para el header */
+        header {
+            background-color: #007BFF; /* Color de fondo del header */
+            color: #ffffff; /* Color del texto en el header */
+            padding: 20px 0; /* Padding vertical del header */
+            text-align: center; /* Centra el texto */
+        }
+
+        h1 {
+            margin: 0; /* Asegúrate de que no haya margen en el h1 */
+            font-size: 2.5em; /* Tamaño de fuente del h1 */
+        }
+
+        /* Estilos para la barra de navegación */
+        nav {
+            display: flex; /* Utiliza flexbox para la barra de navegación */
+            justify-content: center; /* Centra los enlaces horizontalmente */
+            background-color: #5a748f; /* Color de fondo de la barra de navegación */
+            padding: 15px 0; /* Padding vertical de la barra de navegación */
+        }
+
+        nav a {
+            color: #ffffff; /* Color del texto de los enlaces */
+            text-decoration: none; /* Elimina el subrayado de los enlaces */
+            padding: 10px 20px; /* Padding de los enlaces */
+            transition: background-color 0.3s; /* Transición suave al cambiar de color */
+        }
+
+        nav a:hover {
+            background-color: #007BFF; /* Color al pasar el cursor sobre los enlaces */
+        }
+
+        /* Estilos para el contenido principal */
+        .main-content {
+            max-width: 800px; /* Ancho máximo del contenido */
+            margin: 20px auto; /* Centra el contenido horizontalmente */
+            padding: 20px; /* Padding interno del contenido */
+            background-color: #f8f9fa; /* Color de fondo del contenido */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-size: 2em; /* Tamaño de fuente del h2 */
+            margin-bottom: 15px; /* Margen inferior del h2 */
+        }
+
+        p {
+            line-height: 1.6; /* Altura de línea para mejor legibilidad */
+            font-size: 1.1em; /* Tamaño de fuente del párrafo */
+            color: #333; /* Color del texto */
+        }
+
+        /* Estilos para el footer */
+        footer {
+            text-align: center; /* Centra el texto del footer */
+            padding: 15px 0; /* Padding vertical del footer */
+            background-color: #5a748f; /* Color de fondo del footer */
+            color: #ffffff; /* Color del texto en el footer */
+            position: relative; /* Posición relativa para el footer */
+            bottom: 0; /* Alinea al fondo */
+            width: 100%; /* Ancho completo */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="inicio.html">Inicio</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="configuracion.html">Configuración</a>
+        <a href="#">Cerrar Sesión</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Bienvenido a la Plataforma</h2>
+        <p>
+            Esta plataforma está diseñada para ayudar a la detección y gestión de la anemia en pacientes.
+            Proporcionamos herramientas para el seguimiento de los niveles de hemoglobina y otros indicadores importantes.
+            Aquí podrás crear y gestionar perfiles de pacientes, analizar sus datos médicos y recibir alertas
+            sobre su condición de salud para un tratamiento más efectivo.
+        </p>
+        <p>
+            Nuestro objetivo es facilitar el acceso a información relevante para los profesionales de la salud
+            y mejorar la calidad de vida de los pacientes a través de un seguimiento adecuado de su salud.
+            ¡Comienza a explorar las herramientas que ofrecemos!
+        </p>
+
+        <div class="imagen_bienvenida">
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Detector de Anemia. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

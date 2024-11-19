@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Anemia - Perfil</title>
+    <link rel="stylesheet" href="../assets/css/style_main.css"> <!-- Referencia al archivo CSS -->
+    <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+
+        nav>a:nth-child(2){
+            background-color: #659bbe;
+        }
+        * {
+            margin: 0;  /* Elimina los márgenes por defecto */
+            padding: 0; /* Elimina el padding por defecto */
+            box-sizing: border-box; /* Incluye el padding y el borde en el tamaño total */
+        }
+
+        /* Estilos para el header */
+        header {
+            background-color: #007BFF; /* Color de fondo del header */
+            color: #ffffff; /* Color del texto en el header */
+            padding: 20px 0; /* Padding vertical del header */
+            text-align: center; /* Centra el texto */
+        }
+
+        h1 {
+            margin: 0; /* Asegúrate de que no haya margen en el h1 */
+            font-size: 2.5em; /* Tamaño de fuente del h1 */
+        }
+
+        /* Estilos para la barra de navegación */
+        nav {
+            display: flex; /* Utiliza flexbox para la barra de navegación */
+            justify-content: center; /* Centra los enlaces horizontalmente */
+            background-color: #5a748f; /* Color de fondo de la barra de navegación */
+            padding: 15px 0; /* Padding vertical de la barra de navegación */
+        }
+
+        nav a {
+            color: #ffffff; /* Color del texto de los enlaces */
+            text-decoration: none; /* Elimina el subrayado de los enlaces */
+            padding: 10px 20px; /* Padding de los enlaces */
+            transition: background-color 0.3s; /* Transición suave al cambiar de color */
+        }
+    /* Estilo para el formulario moderno */
+    #crear-paciente-form, #actualizar-paciente-form {
+        background-color: #fff; /* Fondo blanco para el formulario */
+        border-radius: 8px; /* Bordes redondeados */
+        padding: 20px; /* Espaciado interno */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        margin-top: 20px; /* Espaciado superior */
+    }
+
+    #crear-paciente-form label, 
+    #actualizar-paciente-form label {
+        display: block; /* Hacer que las etiquetas ocupen todo el ancho */
+        margin-bottom: 5px; /* Espaciado inferior */
+        font-weight: bold; /* Negrita para las etiquetas */
+    }
+
+    #crear-paciente-form input, 
+    #crear-paciente-form select,
+    #actualizar-paciente-form input,
+    #actualizar-paciente-form select {
+        width: 100%; /* Ancho completo */
+        padding: 10px; /* Espaciado interno */
+        margin-bottom: 15px; /* Espaciado inferior */
+        border: 1px solid #ccc; /* Borde gris claro */
+        border-radius: 4px; /* Bordes redondeados */
+        box-sizing: border-box; /* Incluye padding en el ancho total */
+    }
+
+    #crear-paciente-form button,
+    #actualizar-paciente-form button {
+        background-color: #4CAF50; /* Color de fondo verde */
+        color: white; /* Texto blanco */
+        border: none; /* Sin borde */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 4px; /* Bordes redondeados */
+        cursor: pointer; /* Cursor de puntero */
+        transition: background-color 0.3s; /* Transición suave */
+    }
+
+    #crear-paciente-form button:hover,
+    #actualizar-paciente-form button:hover {
+        background-color: #45a049; /* Color al pasar el cursor */
+    }
+
+    /* Estilo para la lista de pacientes */
+    .patient-list {
+        margin-top: 20px;
+        display: none; /* Inicialmente oculto */
+    }
+
+    /* Estilo para el botón de eliminar */
+    .btn-eliminar {
+        background-color: red; /* Color de fondo rojo */
+        color: white; /* Texto blanco */
+        border: none; /* Sin borde */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 4px; /* Bordes redondeados */
+        cursor: pointer; /* Cursor de puntero */
+        transition: background-color 0.3s; /* Transición suave */
+        margin-top: 10px; /* Espaciado superior */
+    }
+
+    .btn-eliminar:hover {
+        background-color: darkred; /* Color al pasar el cursor */
+    }
+
+            /* Estilos para el footer */
+
+</style>
+
+
+
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="inicio.html">Inicio</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="configuracion.html">Configuración</a>
+        <a href="#">Cerrar Sesión</a>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Gestión de Pacientes</h3>
+        <a href="#" onclick="mostrarFormulario('ver')"><i class="fa-regular fa-eye"></i> Ver Pacientes</a>
+        <a href="#" onclick="mostrarFormulario('crear')"><i class="fa-solid fa-plus"></i> Crear Paciente</a>
+        <a href="#" onclick="mostrarFormulario('actualizar')"><i class="fa-solid fa-pen-nib"></i> Actualizar Paciente</a>
+        <a href="#" onclick="mostrarFormulario('eliminar')"><i class="fa-solid fa-trash"></i>  Eliminar Paciente</a> <!-- Cambiado aquí -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Lista de pacientes para ver -->
+        <div id="pacientes" class="patient-list" style="display: block;">
+            <h3>Lista de Pacientes</h3>
+            <div id="paciente-lista"></div> <!-- Aquí se cargarán los pacientes -->
+        </div>
+
+        <!-- Formulario de creación de paciente -->
+        <div id="formulario-crear" style="display: none;">
+            <h3>Crear Paciente</h3>
+            <form id="crear-paciente-form" action="../php/registrar_paciente.php" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" name="peso" step="0.1" required>
+
+                <label for="talla">Talla (cm):</label>
+                <input type="number" id="talla" name="talla" required>
+
+                <label for="hemoglobina">Hemoglobina (g/dL):</label>
+                <input type="number" id="hemoglobina" name="hemoglobina" step="0.1" required>
+
+                <button type="submit">Registrar Paciente</button>
+            </form>
+        </div>
+
+        <!-- Formulario de actualización de paciente -->
+        <div id="formulario-actualizar" style="display: none;">
+            <h3>Actualizar Paciente</h3>
+            <form id="actualizar-paciente-form" action="../php/actualizar_paciente.php" method="POST">
+                <label for="paciente-select">Seleccionar Paciente:</label>
+                <select id="paciente-select" name="paciente_id" required onchange="cargarDatosPaciente()">
+                    <option value="">Seleccione un paciente</option>
+                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                </select>
+
+                <label for="nombre-act">Nombre:</label>
+                <input type="text" id="nombre-act" name="nombre" required>
+
+                <label for="fecha_nacimiento-act">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento-act" name="fecha_nacimiento" required>
+
+                <label for="sexo-act">Sexo:</label>
+                <select id="sexo-act" name="sexo" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+
+                <label for="peso-act">Peso (kg):</label>
+                <input type="number" id="peso-act" name="peso" step="0.1" required>
+
+                <label for="talla-act">Talla (cm):</label>
+                <input type="number" id="talla-act" name="talla" required>
+
+                <label for="hemoglobina-act">Hemoglobina (g/dL):</label>
+                <input type="number" id="hemoglobina-act" name="hemoglobina" step="0.1" required>
+
+                <button type="submit">Actualizar Paciente</button>
+            </form>
+        </div>
+
+        <!-- Lista de pacientes para eliminar -->
+        <div id="pacientes-eliminar" class="patient-list" style="display: none;">
+            <h3>Seleccionar Paciente para Eliminar</h3>
+            <select id="paciente-eliminar" name="paciente-eliminar" required>
+                <option value="">Seleccione un paciente</option>
+                <!-- Las opciones se llenarán dinámicamente aquí -->
+            </select>
+            <button class="btn-eliminar" onclick="confirmarEliminar()">Eliminar Paciente</button>
+        </div>
+    </div>
+
+
+    <script>
+
+// Cargar la lista de pacientes al inicio
+window.onload = function() {
+    cargarPacientes(); // Cargar pacientes en el selector
+    fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
+        .then(response => response.json())
+        .then(data => {
+            const pacienteLista = document.getElementById('paciente-lista');
+            pacienteLista.innerHTML = ''; // Limpiar la lista existente
+
+            if (data.length === 0) {
+                pacienteLista.innerHTML = '<div class="patient-item">No hay pacientes registrados.</div>';
+            } else {
+                data.forEach(paciente => {
+                    const resultadoAnemia = paciente.resultado_anemia !== null ? paciente.resultado_anemia : "Falta hacer predicción";
+                    let estadoAnemia;
+                    let color;
+
+                    switch (resultadoAnemia) {
+                        case '4':
+                            estadoAnemia = "Sin Anemia";
+                            color = "green"; // Color verde para "Sin Anemia"
+                            break;
+                        case '3':
+                            estadoAnemia = "Anemia Leve";
+                            color = "pink"; // Color rosa para "Anemia Leve"
+                            break;
+                        case '2':
+                            estadoAnemia = "Anemia Normal";
+                            color = "orange"; // Color naranja para "Anemia Normal"
+                            break;
+                        case '1':
+                            estadoAnemia = "Anemia Grave";
+                            color = "red"; // Color rojo para "Anemia Grave"
+                            break;
+                        default:
+                            estadoAnemia = "Falta hacer predicción";
+                            color = "black"; // Color negro para "Falta hacer predicción"
+                    }
+
+                    const item = document.createElement('div');
+                    item.className = 'patient-item';
+                    item.textContent = `Paciente: ${paciente.nombre}, Sexo: ${paciente.sexo}, Estado de Anemia: ${estadoAnemia}`;
+                    item.style.backgroundColor = color; // Cambiar el color de fondo del elemento
+                    item.style.color = "white"; // Opcional: Cambiar el color del texto a blanco para mejor visibilidad
+                    pacienteLista.appendChild(item);
+                });
+            }
+        })
+        .catch(error => console.error('Error al cargar los pacientes:', error));
+};
+
+
+
+        // Cargar pacientes en el formulario de actualización
+        function cargarPacientes() {
+            fetch('../php/mostrar_pacientes.php') // Cambia esta ruta si es necesario
+                .then(response => response.json())
+                .then(data => {
+                    const pacienteSelect = document.getElementById('paciente-select');
+                    const pacienteEliminarSelect = document.getElementById('paciente-eliminar');
+
+                    pacienteSelect.innerHTML = ''; // Limpiar opciones existentes en el select de actualización
+                    pacienteEliminarSelect.innerHTML = ''; // Limpiar opciones existentes en el select de eliminación
+
+                    if (data.length === 0) {
+                        const option = document.createElement('option');
+                        option.value = ""; // No hay paciente
+                        option.textContent = "No hay pacientes registrados.";
+                        pacienteSelect.appendChild(option);
+                        pacienteEliminarSelect.appendChild(option.cloneNode(true)); // Clonar la opción para eliminar
+                    } else {
+                        data.forEach(paciente => {
+                            const option = document.createElement('option');
+                            option.value = paciente.id; // ID del paciente
+                            option.textContent = paciente.nombre; // Nombre del paciente
+                            pacienteSelect.appendChild(option); // Añadir la opción al select de actualización
+                            pacienteEliminarSelect.appendChild(option.cloneNode(true)); // Clonar la opción para eliminar
+                        });
+                    }
+                })
+                .catch(error => console.error('Error al cargar los pacientes:', error));
+        }
+
+        // Función para cargar los datos del paciente seleccionado
+        function cargarDatosPaciente() {
+            const pacienteId = document.getElementById('paciente-select').value;
+
+            if (pacienteId) {
+                fetch(`../php/mostrar_paciente.php?id=${pacienteId}`) // Cambia esta ruta si es necesario
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            document.getElementById('nombre-act').value = data.nombre;
+                            document.getElementById('fecha_nacimiento-act').value = data.fecha_nacimiento;
+                            document.getElementById('sexo-act').value = data.sexo;
+                            document.getElementById('peso-act').value = data.peso;
+                            document.getElementById('talla-act').value = data.talla;
+                            document.getElementById('hemoglobina-act').value = data.hemoglobina;
+                        }
+                    })
+                    .catch(error => console.error('Error al cargar los datos del paciente:', error));
+            }
+        }
+
+        function mostrarFormulario(accion) {
+            const crearForm = document.getElementById('formulario-crear');
+            const actualizarForm = document.getElementById('formulario-actualizar');
+            const pacientesDiv = document.getElementById('pacientes');
+            const pacientesEliminarDiv = document.getElementById('pacientes-eliminar');
+
+            crearForm.style.display = 'none'; // Ocultar el formulario de creación
+            actualizarForm.style.display = 'none'; // Ocultar el formulario de actualización
+            pacientesDiv.style.display = 'none'; // Ocultar la lista de pacientes
+            pacientesEliminarDiv.style.display = 'none'; // Ocultar la lista de eliminación
+
+            if (accion === 'crear') {
+                crearForm.style.display = 'block'; // Mostrar el formulario de creación
+            } else if (accion === 'actualizar') {
+                actualizarForm.style.display = 'block'; // Mostrar el formulario de actualización
+            } else if (accion === 'ver') {
+                pacientesDiv.style.display = 'block'; // Mostrar la lista de pacientes
+            } else if (accion === 'eliminar') { // Mostrar la lista para eliminar
+                pacientesEliminarDiv.style.display = 'block'; // Mostrar la lista para eliminar
+                cargarPacientes(); // Cargar pacientes en el formulario de eliminación
+            }
+        }
+
+        function confirmarEliminar() {
+    const pacienteEliminar = document.getElementById('paciente-eliminar').value;
+    if (pacienteEliminar) {
+        const confirmDelete = confirm("¿Está seguro de que desea eliminar al paciente seleccionado?");
+        if (confirmDelete) {
+            fetch('../php/eliminar_paciente.php', { // Cambia esta ruta si es necesario
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'paciente_id=' + pacienteEliminar
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    cargarPacientes(); // Recargar la lista de pacientes
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Error al eliminar el paciente:', error));
+        }
+    } else {
+        alert("Por favor, seleccione un paciente para eliminar.");
+    }
+}
+    </script>
+
+</body>
+</html>
