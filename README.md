@@ -1,2 +1,2 @@
 # PredictAnemiaWeb
-##Todo los datos del proyecto en la rama Master
+##Pagina de predicción y ayuda en contra de la anemia
