@@ -3,157 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detector de Anemia - Reportes</title>
-    <link rel="stylesheet" href="../assets/css/style_main.css"> <!-- Referencia al archivo CSS -->
+    <title>Detector de Anemia - Recomendaciones Dietéticas</title>
     <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- jsPDF -->
+    <!-- Incluir el plugin autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
     <style>
-        nav>a:nth-child(3){
+        /* Estilos generales */
+        * {
+            margin: 0;  
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        header {
+            background-color: #007BFF; 
+            color: #ffffff; 
+            padding: 20px 0; 
+            text-align: center; 
+        }
+        h1 {
+            margin: 0; 
+            font-size: 2.5em; 
+        }
+        nav {
+            display: flex; 
+            justify-content: center; 
+            background-color: #5a748f; 
+            padding: 15px 0; 
+        }
+        nav a {
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            transition: background-color 0.3s; 
+        }
+        nav > a:nth-child(5) {
             background-color: #659bbe;
         }
-
-        * {
-            margin: 0;  /* Elimina los márgenes por defecto */
-            padding: 0; /* Elimina el padding por defecto */
-            box-sizing: border-box; /* Incluye el padding y el borde en el tamaño total */
-        }
-
-        /* Estilos para el header */
-        header {
-            background-color: #007BFF; /* Color de fondo del header */
-            color: #ffffff; /* Color del texto en el header */
-            padding: 20px 0; /* Padding vertical del header */
-            text-align: center; /* Centra el texto */
-        }
-
-        h1 {
-            margin: 0; /* Asegúrate de que no haya margen en el h1 */
-            font-size: 2.5em; /* Tamaño de fuente del h1 */
-        }
-
-        /* Estilos para la barra de navegación */
-        nav {
-            display: flex; /* Utiliza flexbox para la barra de navegación */
-            justify-content: center; /* Centra los enlaces horizontalmente */
-            background-color: #5a748f; /* Color de fondo de la barra de navegación */
-            padding: 15px 0; /* Padding vertical de la barra de navegación */
-        }
-
-        nav a {
-            color: #ffffff; /* Color del texto de los enlaces */
-            text-decoration: none; /* Elimina el subrayado de los enlaces */
-            padding: 10px 20px; /* Padding de los enlaces */
-            transition: background-color 0.3s; /* Transición suave al cambiar de color */
-        }
-
-        nav a:hover {
-            background-color: #007BFF; /* Color al pasar el cursor sobre los enlaces */
-        }
-
-        /* Estilos para el contenido principal */
         .main-content {
-            max-width: 800px; /* Ancho máximo del contenido */
-            margin: 20px auto; /* Centra el contenido horizontalmente */
-            padding: 20px; /* Padding interno del contenido */
-            background-color: #f8f9fa; /* Color de fondo del contenido */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            padding: 20px;
+            text-align: center;
+            min-height: calc(100vh - 200px); 
         }
-
-        h2 {
-            font-size: 2em; /* Tamaño de fuente del h2 */
-            margin-bottom: 15px; /* Margen inferior del h2 */
-        }
-
-        p {
-            line-height: 1.6; /* Altura de línea para mejor legibilidad */
-            font-size: 1.1em; /* Tamaño de fuente del párrafo */
-            color: #333; /* Color del texto */
-        }
-
-        /* Estilos para el footer */
         footer {
-            text-align: center; /* Centra el texto del footer */
-            padding: 15px 0; /* Padding vertical del footer */
-            background-color: #5a748f; /* Color de fondo del footer */
-            color: #ffffff; /* Color del texto en el footer */
-            position: relative; /* Posición relativa para el footer */
-            bottom: 0; /* Alinea al fondo */
-            width: 100%; /* Ancho completo */
+            background-color: #5a748f; 
+            color: #ffffff; 
+            text-align: center; 
+            padding: 10px 0; 
+            position: relative; 
+            bottom: 0; 
+            width: 100%; 
         }
-        /* Estilo para la sección de reportes */
-        #reportes-container {
-            background-color: #fff; /* Fondo blanco */
-            border-radius: 8px; /* Bordes redondeados */
-            padding: 20px; /* Espaciado interno */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-            margin-top: 20px; /* Espaciado superior */
+        /* Selección de pacientes */
+        .select-paciente {
+            margin: 20px auto;
+            display: flex;
+            width: 20em;
+            height: 3em;
+            border-radius: .25em;
+            overflow: hidden;
+            background-color: #33333307;
+            text-align: center;
         }
-
-
-        .btn-generar {
-            background-color: #4CAF50; /* Color de fondo verde */
-            color: white; /* Texto blanco */
-            border: none; /* Sin borde */
-            padding: 10px; /* Espaciado interno */
-            border-radius: 4px; /* Bordes redondeados */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s; /* Transición suave */
+        /* Estilo del informe */
+        #informeDieta {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+            text-align: left;
         }
-
-        .btn-generar:hover {
-            background-color: #45a049; /* Color al pasar el cursor */
+        #informeDieta h2 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+        #informeDieta .info-paciente {
+            margin-bottom: 20px;
+        }
+        #informeDieta .info-paciente span {
+            font-weight: bold;
+        }
+        #informeDieta table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #informeDieta table, #informeDieta th, #informeDieta td {
+            border: 1px solid #ddd;
+        }
+        #informeDieta th, #informeDieta td {
+            padding: 10px;
+            text-align: center;
+        }
+        #informeDieta th {
+            background-color: #007BFF;
+            color: white;
+        }
+        #mensajeNoDatos {
+            text-align: center;
+            color: #f00;
+            font-size: 1.2em;
+            display: none;
+        }
+        #mensajeNoPrediccion {
+            text-align: center;
+            color: #f39c12;
+            font-size: 1.2em;
+            display: none;
+            background-color: #fef5e2;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Estilo del botón */
+        #exportarPDF {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            display: none; /* Por defecto oculto */
+        }
+        #exportarPDF:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-
-    <!-- Header -->
     <header>
-        <h1>    <i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
     </header>
 
-    <!-- Navbar -->
     <nav>
         <a href="inicio.html">Inicio</a>
         <a href="perfil.html">Perfil</a>
+        <a href="consultas.html">Consultas Médicas</a>
+        <a href="Recomendaciones.html">Recomendaciones</a>
         <a href="reportes.html">Reportes</a>
-        <a href="configuracion.html">Configuración</a>
+                <a href="recursos.html">Recursos Adicionales</a>
         <a href="#">Cerrar Sesión</a>
     </nav>
 
-    <!-- Main Content -->
     <div class="main-content">
-        <div id="reportes-container">
-            <h2>Generar Reportes</h2>
-            <button class="btn-generar" onclick="generarReporte()">Generar Reporte de Pacientes</button>
+        <h2>Progreso medico</h2>
+        <label for="pacienteSelect">Selecciona un Paciente:</label>
+        <select id="pacienteSelect" class="select-paciente" onchange="cargarDatosPaciente()">
+            <option value="">-- Selecciona un paciente --</option>
+        </select>
 
-            <h3>Reportes Generados</h3>
-            <div id="lista-reportes">
-                <!-- Aquí se mostrarán los reportes generados -->
+        <div id="mensajeNoDatos">No hay información disponible para este paciente.</div>
+        <div id="mensajeNoPrediccion">Falta predecir su dieta personalizada.</div>
+
+        <div id="informeDieta" style="display:none;">
+            <h2>Diagnóstico y dieta</h2>
+            <div class="info-paciente">
+                <p><span>Paciente:</span> <span id="nombrePaciente"></span></p>
+                <p><span>Edad:</span> <span id="edadPaciente"></span></p>
+                <p><span>Diagnóstico:</span> <span id="diagnosticoPaciente"></span></p>
             </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Desayuno</th>
+                        <th>Almuerzo</th>
+                        <th>Cena</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaDieta"></tbody>
+            </table>
         </div>
+        
+        <!-- Botón para exportar a PDF (inicialmente oculto) -->
+        <button id="exportarPDF" onclick="exportarApdf()">Exportar a PDF</button>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 Detector de Anemia. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        function generarReporte() {
-            // Lógica para generar el reporte de pacientes
-            alert("Reporte generado (simulación).");
-            // Aquí puedes agregar la lógica para generar el reporte real
-            const listaReportes = document.getElementById('lista-reportes');
-            const nuevoReporte = document.createElement('div');
-            nuevoReporte.className = 'reporte-item';
-            nuevoReporte.textContent = 'Reporte de Pacientes - ' + new Date().toLocaleString();
-            listaReportes.appendChild(nuevoReporte);
+        // Llamar pacientes desde el backend
+        function cargarPacientes() {
+            fetch('../php/mostrar_pacientes.php')
+                .then(response => response.json())
+                .then(pacientes => {
+                    const select = document.getElementById('pacienteSelect');
+                    pacientes.forEach(paciente => {
+                        const option = document.createElement('option');
+                        option.value = paciente.id;
+                        option.textContent = paciente.nombre;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al cargar pacientes:', error));
         }
-    </script>
 
+        // Cargar los datos del paciente
+        function cargarDatosPaciente() {
+            const pacienteId = document.getElementById('pacienteSelect').value;
+            if (!pacienteId) {
+                document.getElementById('informeDieta').style.display = 'none';
+                document.getElementById('mensajeNoDatos').style.display = 'none';
+                document.getElementById('mensajeNoPrediccion').style.display = 'none';
+                document.getElementById('exportarPDF').style.display = 'none'; // Ocultar el botón
+                return;
+            }
+
+            fetch(`../php/obtener_dieta2.php?id=${pacienteId}`)
+                .then(response => response.json())
+                .then(datos => {
+                    if (datos) {
+                        // Mostrar los datos del paciente
+                        document.getElementById('nombrePaciente').textContent = datos.nombre;
+                        document.getElementById('edadPaciente').textContent = datos.edad;
+                        document.getElementById('diagnosticoPaciente').textContent = datos.diagnostico;
+                        
+                        // Mostrar la tabla de dieta
+                        const tablaDieta = document.getElementById('tablaDieta');
+                        tablaDieta.innerHTML = ''; // Limpiar la tabla antes de llenarla
+                        datos.dieta.forEach(dia => {
+                            const fila = document.createElement('tr');
+                            fila.innerHTML = `
+                                <td>${dia.dia}</td>
+                                <td>${dia.desayuno}</td>
+                                <td>${dia.almuerzo}</td>
+                                <td>${dia.cena}</td>
+                            `;
+                            tablaDieta.appendChild(fila);
+                        });
+
+                        document.getElementById('informeDieta').style.display = 'block';
+                        document.getElementById('mensajeNoDatos').style.display = 'none';
+                        document.getElementById('mensajeNoPrediccion').style.display = 'none';
+                        document.getElementById('exportarPDF').style.display = 'inline-block'; // Mostrar el botón
+                    } else {
+                        document.getElementById('mensajeNoDatos').style.display = 'block';
+                        document.getElementById('mensajeNoPrediccion').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los datos del paciente:', error);
+                    document.getElementById('mensajeNoDatos').style.display = 'block';
+                    document.getElementById('mensajeNoPrediccion').style.display = 'none';
+                });
+        }
+
+        // Exportar a PDF
+        function exportarApdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const nombrePaciente = document.getElementById('nombrePaciente').textContent;
+            const edadPaciente = document.getElementById('edadPaciente').textContent;
+            const diagnosticoPaciente = document.getElementById('diagnosticoPaciente').textContent;
+            const contenidoInforme = document.getElementById('informeDieta');
+            const tableData = [];
+            const rows = contenidoInforme.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const cols = row.querySelectorAll('td');
+                tableData.push([cols[0].textContent, cols[1].textContent, cols[2].textContent, cols[3].textContent]);
+            });
+
+            doc.setFontSize(18);
+            doc.text('Informe Dieta Semanal', 105, 20, { align: 'center' });
+            doc.setFontSize(12);
+            doc.text(`Paciente: ${nombrePaciente}`, 20, 30);
+            doc.text(`Edad: ${edadPaciente}`, 20, 40);
+            doc.text(`Diagnóstico: ${diagnosticoPaciente}`, 20, 50);
+
+            doc.autoTable({
+                head: [['Día', 'Desayuno', 'Almuerzo', 'Cena']],
+                body: tableData,
+                startY: 60,
+                theme: 'striped',
+            });
+
+            doc.save('Informe_Dieta_Semanal.pdf');
+        }
+
+        // Llamar a la función para cargar los pacientes al iniciar
+        window.onload = cargarPacientes;
+    </script>
 </body>
 </html>
-
-

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Anemia - Recomendaciones Dietéticas</title>
+    <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
+    <style>
+        nav > a:nth-child(4) {
+            background-color: #659bbe;
+        }
+        * {
+            margin: 0;  
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        header {
+            background-color: #007BFF; 
+            color: #ffffff; 
+            padding: 20px 0; 
+            text-align: center; 
+        }
+        h1 {
+            margin: 0; 
+            font-size: 2.5em; 
+        }
+        nav {
+            display: flex; 
+            justify-content: center; 
+            background-color: #5a748f; 
+            padding: 15px 0; 
+        }
+        nav a {
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            transition: background-color 0.3s; 
+        }
+        .main-content {
+            padding: 20px;
+            text-align: center;
+            min-height: calc(100vh - 200px); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #dietaForm {
+            background-color: #f8f9fa; 
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            width: 320px; 
+        }
+        #dietaForm label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        #dietaForm select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ced4da; 
+        }
+        #dietaForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        #dietaForm button:hover {
+            background-color: #0056b3; 
+        }
+        .dieta {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .dia {
+            border-radius: 10px;
+            padding: 15px;
+            width: 180px;
+            margin: 10px;
+            background: linear-gradient(135deg, #a3c9e0, #f0f0f0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .dia:hover {
+            transform: translateY(-5px);
+        }
+
+        .dia h3 {
+            color: #007BFF;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .dia p {
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .edit-form {
+            display: none;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #5a748f; 
+            color: #ffffff; 
+            text-align: center; 
+            padding: 10px 0; 
+            position: relative; 
+            bottom: 0; 
+            width: 100%; 
+        }
+
+        .select-paciente{
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            display: flex;
+            width: 20em;
+            height: 3em;
+            border-radius: .25em;
+            overflow: hidden;
+            background-color: #33333307;
+            text-align: center;
+        }
+        h2{
+            margin: 0;
+        }
+
+                /* Efecto de guardado visual */
+        .saved {
+            animation: highlight 0.5s ease-in-out;
+        }
+        @keyframes highlight {
+            0% { background-color: #d4edda; }
+            100% { background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
+    </header>
+
+    <nav>
+        <a href="inicio.html">Inicio</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="consultas.html">Consultas Medicas</a>
+        <a href="Recomendaciones.html">Recomendaciones</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="recursos.html">Recursos Adicionales</a>
+        <a href="#">Cerrar Sesión</a>
+    </nav>
+
+    <div class="main-content">
+        <h2>Generar Dieta Semanal</h2>
+        <label for="pacienteSelect">Selecciona un Paciente:</label>
+        <select id="pacienteSelect" class="select-paciente" onchange="cargarDatosPaciente()">
+            <option value="">-- Selecciona un paciente --</option>
+        </select>
+
+        <form id="dietaForm" style="display:none;">
+            <label for="nivelAnemia">Nivel de Anemia:</label>
+            <select id="nivelAnemia" name="nivelAnemia" required>
+                <option value="1">Anemia Grave</option>
+                <option value="2">Anemia Normal</option>
+                <option value="3">Anemia Moderada</option>
+                <option value="4">Sin Anemia</option>
+            </select>
+
+            <label for="tipoComida">Tipo de Comida:</label>
+            <select id="tipoComida" name="tipoComida" required>
+                <option value="vegetariana">Vegetariana</option>
+                <option value="vegana">Vegana</option>
+                <option value="carnívora">Carnívora</option>
+                <option value="no especificado">No Especificado</option>
+            </select>
+
+            <label for="restricciones">Restricciones:</label>
+            <select id="restricciones" name="restricciones" required>
+                <option value="sin_gluten">Sin Gluten</option>
+                <option value="sin_lácteos">Sin Lácteos</option>
+                <option value="sin_nueces">Sin Nueces</option>
+                <option value="no especificado">No Especificado</option>
+            </select>
+
+            <button type="button" onclick="generarDieta()">Generar</button>
+        </form>
+
+        <div id="resultadoDieta" class="dieta"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Detector de Anemia. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function cargarPacientes() {
+            fetch('../php/mostrar_pacientes.php')
+                .then(response => response.json())
+                .then(pacientes => {
+                    const select = document.getElementById('pacienteSelect');
+                    pacientes.forEach(paciente => {
+                        const option = document.createElement('option');
+                        option.value = paciente.id;
+                        option.textContent = paciente.nombre;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al cargar pacientes:', error));
+        }
+
+        function cargarDatosPaciente() {
+            const pacienteId = document.getElementById('pacienteSelect').value;
+            if (!pacienteId) {
+                document.getElementById('dietaForm').style.display = 'none';
+                document.getElementById('resultadoDieta').innerHTML = '';
+                return;
+            }
+
+            fetch(`../php/obtener_dieta.php?id=${pacienteId}`)
+                .then(response => response.json())
+                .then(datos => {
+                    if (datos.tieneDieta) {
+                        document.getElementById('resultadoDieta').innerHTML = crearHTMLDieta(datos.dieta);
+                        document.getElementById('dietaForm').style.display = 'none';
+                    } else {
+                        document.getElementById('resultadoDieta').innerHTML = '';
+                        document.getElementById('dietaForm').style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Error al cargar los datos del paciente:', error));
+        }
+
+        function generarDieta() {
+            const formData = new FormData(document.getElementById('dietaForm'));
+            const data = {
+                nivel_anemia: parseInt(formData.get('nivelAnemia')),
+                tipo_comida: formData.get('tipoComida'),
+                restriccion: formData.get('restricciones')
+            };
+
+            fetch('https://679d-34-133-176-192.ngrok-free.app/api/dieta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+                return response.json();
+            })
+            .then(dietaGenerada => {
+                insertarDietaEnBaseDeDatos(dietaGenerada);
+                document.getElementById('resultadoDieta').innerHTML = crearHTMLDieta(dietaGenerada);
+                document.getElementById('dietaForm').style.display = 'none';
+            })
+            .catch(error => console.error('Error al generar la dieta:', error));
+        }
+
+        function insertarDietaEnBaseDeDatos(dieta) {
+                const pacienteId = document.getElementById('pacienteSelect').value; // ID del paciente seleccionado
+
+                fetch('../php/insercion_dieta.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ dieta: dieta, paciente_id: pacienteId }) // Cambiado a paciente_id
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al insertar dieta en la base de datos');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status !== 'success') {
+                        throw new Error(data.message); // Manejo de errores
+                    }
+                    console.log('Dieta insertada en la base de datos:', data);
+                })
+                .catch(error => console.error('Error al insertar dieta:', error));
+        }
+
+
+        function crearHTMLDieta(dieta) {
+            return dieta.map((dia, index) => `
+                <div class="dia">
+                    <h3>Día ${index + 1}</h3>
+                    <p><strong>Desayuno:</strong> ${dia.desayuno}</p>
+                    <p><strong>Almuerzo:</strong> ${dia.almuerzo}</p>
+                    <p><strong>Cena:</strong> ${dia.cena}</p>
+                    <button onclick="mostrarEditarFormulario(${index})">Modificar</button>
+                    <div class="edit-form" id="editForm${index}">
+                        <label>Desayuno: <input type="text" value="${dia.desayuno}" id="editDesayuno${index}"></label>
+                        <label>Almuerzo: <input type="text" value="${dia.almuerzo}" id="editAlmuerzo${index}"></label>
+                        <label>Cena: <input type="text" value="${dia.cena}" id="editCena${index}"></label>
+                        <button onclick="guardarCambios(${index})">Guardar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function mostrarEditarFormulario(index) {
+            document.getElementById(`editForm${index}`).style.display = 'block';
+        }
+
+        function guardarCambios(index) {
+            const desayuno = document.getElementById(`editDesayuno${index}`).value;
+            const almuerzo = document.getElementById(`editAlmuerzo${index}`).value;
+            const cena = document.getElementById(`editCena${index}`).value;
+
+            fetch('../php/actualizar_dieta.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ dia: index + 1, desayuno, almuerzo, cena })
+            })
+            .then(response => response.json())
+            .then(result => console.log('Dieta actualizada:', result))
+            .catch(error => console.error('Error al actualizar dieta:', error));
+        }
+
+        function guardarCambios(index) {
+            const desayuno = document.getElementById(`editDesayuno${index}`).value;
+            const almuerzo = document.getElementById(`editAlmuerzo${index}`).value;
+            const cena = document.getElementById(`editCena${index}`).value;
+
+            // Actualizar el contenido visualmente en la tarjeta de dieta
+            document.querySelector(`#dia${index} .desayuno`).textContent = `Desayuno: ${desayuno}`;
+            document.querySelector(`#dia${index} .almuerzo`).textContent = `Almuerzo: ${almuerzo}`;
+            document.querySelector(`#dia${index} .cena`).textContent = `Cena: ${cena}`;
+
+            // Aplicar un efecto visual de "guardado"
+            document.getElementById(`dia${index}`).classList.add('saved');
+
+            // Ocultar el formulario de edición después de guardar
+            document.getElementById(`editForm${index}`).style.display = 'none';
+
+            // Remover la clase de efecto de guardado después de un breve tiempo
+            setTimeout(() => {
+                document.getElementById(`dia${index}`).classList.remove('saved');
+            }, 800);
+        }
+         // Función para generar el HTML de la dieta, añadiendo IDs para cada día
+        function crearHTMLDieta(dieta) {
+            return dieta.map((dia, index) => `
+                <div class="dia" id="dia${index}">
+                    <h3>Día ${index + 1}</h3>
+                    <p class="desayuno"><strong>Desayuno:</strong> ${dia.desayuno}</p>
+                    <p class="almuerzo"><strong>Almuerzo:</strong> ${dia.almuerzo}</p>
+                    <p class="cena"><strong>Cena:</strong> ${dia.cena}</p>
+                    <button onclick="mostrarEditarFormulario(${index})">Modificar</button>
+                    <div class="edit-form" id="editForm${index}">
+                        <label>Desayuno: <input type="text" value="${dia.desayuno}" id="editDesayuno${index}"></label>
+                        <label>Almuerzo: <input type="text" value="${dia.almuerzo}" id="editAlmuerzo${index}"></label>
+                        <label>Cena: <input type="text" value="${dia.cena}" id="editCena${index}"></label>
+                        <button onclick="guardarCambios(${index})">Guardar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        window.onload = cargarPacientes;
+    </script>
+</body>
+</html>

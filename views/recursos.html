@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Anemia - Recomendaciones Dietéticas</title>
+    <script src="https://kit.fontawesome.com/65d4142978.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script> <!-- jsPDF AutoTable -->
+
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #5a748f;
+            padding: 15px 0;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+        nav > a:nth-child(6) {
+            background-color: #659bbe;
+        }
+        .main-content {
+            padding: 20px;
+            text-align: center;
+            min-height: calc(100vh - 200px);
+        }
+        footer {
+            background-color: #5a748f;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Video Section */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #007BFF;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .video-card {
+            width: 280px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 160px;
+            border-radius: 8px;
+        }
+
+        .video-card h3 {
+            text-align: center;
+            margin-top: 10px;
+            color: #007BFF;
+        }
+
+        .video-card p {
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .playlist {
+            margin-top: 30px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .playlist h3 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .playlist ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .playlist ul li {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .playlist ul li a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s;
+        }
+
+        .playlist ul li a:hover {
+            color: #0056b3;
+        }
+
+        .playlist .playlist-card {
+            display: flex;
+            gap: 15px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .playlist .playlist-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+        }
+
+        .playlist .playlist-card .playlist-info {
+            flex-grow: 1;
+        }
+
+        .playlist .playlist-card .playlist-info h4 {
+            color: #007BFF;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .playlist .playlist-card .playlist-info p {
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .playlist .playlist-card:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fa-solid fa-syringe"></i> Detector de Anemia</h1>
+    </header>
+
+    <nav>
+        <a href="inicio.html">Inicio</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="consultas.html">Consultas Médicas</a>
+        <a href="Recomendaciones.html">Recomendaciones</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="recursos.html">Recursos Adicionales</a>
+        <a href="#">Cerrar Sesión</a>
+    </nav>
+
+    <div class="main-content">
+        <div class="section" id="tratamiento">
+            <h2>Tratamiento de la Anemia</h2>
+            <div class="video-container" id="videoContainerTratamiento"></div>
+            <div class="playlist" id="playlistContainerTratamiento"></div>
+        </div>
+
+        <div class="section" id="causas">
+            <h2>Causas de la Anemia</h2>
+            <div class="video-container" id="videoContainerCausas"></div>
+            <div class="playlist" id="playlistContainerCausas"></div>
+        </div>
+
+        <div class="section" id="dietas">
+            <h2>Dietas para Tratar la Anemia</h2>
+            <div class="video-container" id="videoContainerDietas"></div>
+            <div class="playlist" id="playlistContainerDietas"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Detector de Anemia. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const apiKey = 'AIzaSyDBa2QqhUvtPmyT1ZxUbae_QQIOnz3kEd8'; // Tu clave de API de YouTube
+        const searchQueries = {
+            tratamiento: 'tratamiento anemia',
+            causas: 'causas anemia',
+            dietas: 'dietas anemia'
+        };
+
+        // Función para obtener videos
+        function getVideos(query, containerId) {
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${apiKey}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items) {
+                        const videos = data.items;
+                        const videoContainer = document.getElementById(containerId);
+                        videoContainer.innerHTML = ''; // Limpiar el contenedor
+
+                        videos.forEach(video => {
+                            const videoElement = document.createElement('div');
+                            videoElement.classList.add('video-card');
+
+                            videoElement.innerHTML = `
+                                <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <h3>${video.snippet.title}</h3>
+                                <p>${video.snippet.description}</p>
+                            `;
+
+                            videoContainer.appendChild(videoElement);
+                        });
+                    } else {
+                        document.getElementById(containerId).innerHTML = '<p>No se encontraron videos.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching videos:', error);
+                    document.getElementById(containerId).innerHTML = '<p>Error al cargar los videos.</p>';
+                });
+        }
+
+        // Función para obtener listas de reproducción
+        function getPlaylists(query, containerId) {
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=playlist&key=${apiKey}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items) {
+                        const playlists = data.items;
+                        const playlistContainer = document.getElementById(containerId);
+                        playlistContainer.innerHTML = ''; // Limpiar el contenedor
+
+                        playlists.forEach(playlist => {
+                            const playlistCard = document.createElement('div');
+                            playlistCard.classList.add('playlist-card');
+                            playlistCard.onclick = () => window.open(`https://www.youtube.com/playlist?list=${playlist.id.playlistId}`, '_blank');
+
+                            playlistCard.innerHTML = `
+                                <img src="${playlist.snippet.thumbnails.medium.url}" alt="${playlist.snippet.title}">
+                                <div class="playlist-info">
+                                    <h4>${playlist.snippet.title}</h4>
+                                    <p>${playlist.snippet.description}</p>
+                                </div>
+                            `;
+
+                            playlistContainer.appendChild(playlistCard);
+                        });
+                    } else {
+                        document.getElementById(containerId).innerHTML = '<p>No se encontraron listas de reproducción.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching playlists:', error);
+                    document.getElementById(containerId).innerHTML = '<p>Error al cargar las listas de reproducción.</p>';
+                });
+        }
+
+        // Llamada a las funciones para obtener videos y playlists
+        getVideos(searchQueries.tratamiento, 'videoContainerTratamiento');
+        getPlaylists(searchQueries.tratamiento, 'playlistContainerTratamiento');
+        
+        getVideos(searchQueries.causas, 'videoContainerCausas');
+        getPlaylists(searchQueries.causas, 'playlistContainerCausas');
+        
+        getVideos(searchQueries.dietas, 'videoContainerDietas');
+        getPlaylists(searchQueries.dietas, 'playlistContainerDietas');
+    </script>
+</body>
+</html>
